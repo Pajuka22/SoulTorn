@@ -1,0 +1,6 @@
+7|V|We'll make that a large. Can you take off the pineapple on that special?
+5|N|What? No, leave the pineapple!
+2|V|No.
+2|N|Please...
+2|V|No.
+2|N|Rude.
