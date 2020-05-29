@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -35,10 +35,11 @@ public class MovementScript : MonoBehaviour
     bool inDodgeRoll;
     float dodgeLength;
     bool justFinished;
+        
 
     //Global Control Bools
     bool dodgeRoll;
-    float additionalSpeed;
+    public float additionalSpeed;
     float iframes;
 
     //Components
@@ -53,6 +54,7 @@ public class MovementScript : MonoBehaviour
         direction = 0;
         rb = GetComponent<Rigidbody2D>();
         states = GetComponent<PlayerStates>();
+        walkSpeed += additionalSpeed;
     }
 
     // Update is called once per frame
@@ -68,7 +70,9 @@ public class MovementScript : MonoBehaviour
                     justFinished = false;
                 }
                 //Debug.Log("Left");
-                direction = -1 * additionalSpeed;
+                direction = -1 ;
+
+                //currentSpeed += direction * (accelerationRate * Time.fixedDeltaTime);
                 Player.Instance.spriteR.flipX = true;
                 if (onGround)
                 {
@@ -88,7 +92,9 @@ public class MovementScript : MonoBehaviour
                     justFinished = false;
                 }
                 //Debug.Log("Right");
-                direction = 1 * additionalSpeed;
+                direction = 1;
+
+                //currentSpeed += direction * (accelerationRate * Time.fixedDeltaTime);
                 Player.Instance.spriteR.flipX = false;
                 if (onGround)
                 {
@@ -154,8 +160,9 @@ public class MovementScript : MonoBehaviour
 
     private void MoveCharacter()
     {
-        currentSpeed += direction * (accelerationRate * Time.fixedDeltaTime); 
-        rb.velocity = new Vector2(direction * walkSpeed + currentSpeed, jump && jumpIndex <= jumpHeight.Count - 1 ? CalculateJumpSpeed() : rb.velocity.y);
+        currentSpeed += direction * (accelerationRate * Time.fixedDeltaTime);
+        Debug.Log(direction * walkSpeed + currentSpeed);
+        rb.velocity = new Vector2((direction * walkSpeed) + currentSpeed, jump && jumpIndex <= jumpHeight.Count - 1 ? CalculateJumpSpeed() : rb.velocity.y);
         if (UtilityLibrary.sign(direction) != UtilityLibrary.sign(currentSpeed) && currentSpeed != 0)
         {
             int currentSign = UtilityLibrary.sign(currentSpeed);
@@ -169,7 +176,7 @@ public class MovementScript : MonoBehaviour
         {
             jumpIndex++;
         }
-        Debug.Log(jumpIndex);
+       // Debug.Log(jumpIndex);
         jump = false;
     }
     
@@ -205,6 +212,8 @@ public class MovementScript : MonoBehaviour
 
     public IEnumerator dodgeRollMove()
     {
+
+        //The only reason a coroutine works here is because we're assuming the player cannot stop the dodge roll. Maybe that can be a passive ability?
         if (dodgeRoll)
         {
             float priorRate = accelerationRate;
@@ -219,12 +228,14 @@ public class MovementScript : MonoBehaviour
             yield return new WaitForSeconds(0.25f);
             justFinished = false;
 
+            //Now let's calculate distannceee
+
+
         }
         else
         {
             yield return new WaitForSeconds(0f);
         }
-        //The only reason a coroutine works here is because we're assuming the player cannot stop the dodge roll. Maybe that can be a passive ability?
     }
 
     private void Load()
