@@ -26,6 +26,7 @@ public class PassiveParent : AbilityParent
         switch (trigger)
         {
             case ActivationType.Hit:
+                AbilityManager.instance.hitSword += Activate;
                 switch (hitType)
                 {
                     case HitTypes.ActivatedAbility:
@@ -39,7 +40,6 @@ public class PassiveParent : AbilityParent
                 }
                 break;
             case ActivationType.GetHit:
-                
                 break;
             case ActivationType.ActivateAbility:
                 break;

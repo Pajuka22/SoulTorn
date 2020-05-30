@@ -23,7 +23,7 @@ public class AbilityParent : MonoBehaviour
         //but not today.
     }
     //who knows when i'd need to use this
-    protected virtual void Activate(Vector2 pos)
+    protected virtual void Activate(Enemy e)
     {
 
     }
