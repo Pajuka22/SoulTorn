@@ -7,7 +7,7 @@ public class AbilityManager : MonoBehaviour
 {
     public static AbilityManager instance;
     public ActivatedParent[] activatedAbilities = new ActivatedParent[3];
-    public PassiveParent[] passiveAbilities = new PassiveParent[3];
+    public PassiveParent[] passiveAbilities = new PassiveParent[5];
 
     // Start is called before the first frame update
     void Start()
