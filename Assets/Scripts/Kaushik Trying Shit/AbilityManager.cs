@@ -36,17 +36,6 @@ public class AbilityManager : MonoBehaviour
     {
         hitAbility?.Invoke(e);
     }
-    void RemoveAllAbilities()
-    {
-        foreach(AbilityParent a in activatedAbilities)
-        {
-            a.Disable();
-        }
-        foreach (AbilityParent a in passiveAbilities)
-        {
-            a.Disable();
-        }
-    }
     public event Action<Enemy> getHit;
     public void GetHit(Enemy e)
     {
@@ -61,5 +50,16 @@ public class AbilityManager : MonoBehaviour
     public void EnemiesCollide(Enemy e1, Enemy e2)
     {
         enemiesCollide?.Invoke(e1, e2);
+    }
+    void RemoveAllAbilities()
+    {
+        foreach (AbilityParent a in activatedAbilities)
+        {
+            a.Disable();
+        }
+        foreach (AbilityParent a in passiveAbilities)
+        {
+            a.Disable();
+        }
     }
 }

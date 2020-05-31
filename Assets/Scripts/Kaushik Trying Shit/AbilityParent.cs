@@ -4,6 +4,9 @@ using UnityEngine;
 [RequireComponent(typeof(MovementScript))]
 public class AbilityParent : MonoBehaviour
 {
+    [System.NonSerialized]
+    public bool unlocked;
+    [System.NonSerialized]
     public bool on;
     Player player;
     // Start is called before the first frame update

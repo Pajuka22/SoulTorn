@@ -14,7 +14,7 @@ public class PassiveParent : AbilityParent
     public enum Types { Hit, GetHit, ActivateAbility, EnemiesCollide, None}//these are public for the custom editor.
     public enum HitTypes { ActivatedAbility, Sword, Both, None}
     [SerializeField]
-    readonly protected Types trigger;
+    readonly protected Types trigger = Types.None;
     [SerializeField]
     [Tooltip("Won't do anything unless trigger == Hit")]
     readonly protected HitTypes hitType = HitTypes.None;
@@ -29,6 +29,16 @@ public class PassiveParent : AbilityParent
     void Update()
     {
         
+    }
+    public override void Enable()
+    {
+        on = true;
+        AttachToEvents();
+    }
+    public override void Disable()
+    {
+        on = false;
+        RemoveFromEvents();
     }
     public virtual void AttachToEvents()
     {
