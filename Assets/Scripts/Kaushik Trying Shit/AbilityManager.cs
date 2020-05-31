@@ -6,7 +6,9 @@ using UnityEngine;
 public class AbilityManager : MonoBehaviour
 {
     public static AbilityManager instance;
-    bool dunnit;
+    public ActivatedParent[] activatedAbilities = new ActivatedParent[3];
+    public PassiveParent[] passiveAbilities = new PassiveParent[3];
+
     // Start is called before the first frame update
     void Start()
     {
@@ -19,19 +21,45 @@ public class AbilityManager : MonoBehaviour
 
     }
     //creating a bunch of events to trigger when enemies get hit, when the player gets hit, etc. mainly for passive abilities.
-    public event Action hitAny;
-    public void HitAny()
+    public event Action<Enemy> hitAny;
+    public void HitAny(Enemy e)
     {
-        hitAny?.Invoke();
+        hitAny?.Invoke(e);
     }
-    public event Action hitSword;
-    public void HitSword()
+    public event Action<Enemy> hitSword;
+    public void HitSword(Enemy e)
     {
-        hitSword?.Invoke();
+        hitSword?.Invoke(e);
     }
-    public event Action hitAbility;
-    public void HitAbility()
+    public event Action<Enemy> hitAbility;
+    public void HitAbility(Enemy e)
     {
-
+        hitAbility?.Invoke(e);
+    }
+    void RemoveAllAbilities()
+    {
+        foreach(AbilityParent a in activatedAbilities)
+        {
+            a.Disable();
+        }
+        foreach (AbilityParent a in passiveAbilities)
+        {
+            a.Disable();
+        }
+    }
+    public event Action<Enemy> getHit;
+    public void GetHit(Enemy e)
+    {
+        getHit?.Invoke(e);
+    }
+    public event Action<AbilityParent> activateAbility;
+    public void ActivateAbility(AbilityParent a)
+    {
+        activateAbility?.Invoke(a);
+    }
+    public event Action<Enemy, Enemy> enemiesCollide;
+    public void EnemiesCollide(Enemy e1, Enemy e2)
+    {
+        enemiesCollide?.Invoke(e1, e2);
     }
 }

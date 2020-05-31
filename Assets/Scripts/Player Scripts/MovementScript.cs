@@ -2,11 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody2D))]
 public class MovementScript : MonoBehaviour
 {
     private float direction;
-    [SerializeField]
-    private List<float> jumpHeight = new List<float>();//list of heights of jumps. Allows for as many jumps as you want
+    public List<float> jumpHeight = new List<float>();//list of heights of jumps. Allows for as many jumps as you want
     private int jumpIndex;
     [SerializeField]
     private float maxSpeed;
@@ -73,7 +73,7 @@ public class MovementScript : MonoBehaviour
                 direction = -1 ;
 
                 //currentSpeed += direction * (accelerationRate * Time.fixedDeltaTime);
-                Player.Instance.spriteR.flipX = true;
+                //Player.Instance.spriteR.flipX = true;
                 if (onGround)
                 {
                     states.current = states.current == PlayerStates.AnimStates.atk ? PlayerStates.AnimStates.runatk : PlayerStates.AnimStates.run;
@@ -95,7 +95,7 @@ public class MovementScript : MonoBehaviour
                 direction = 1;
 
                 //currentSpeed += direction * (accelerationRate * Time.fixedDeltaTime);
-                Player.Instance.spriteR.flipX = false;
+                //Player.Instance.spriteR.flipX = false;
                 if (onGround)
                 {
                     states.current = states.current == PlayerStates.AnimStates.atk ? PlayerStates.AnimStates.runatk : PlayerStates.AnimStates.run;

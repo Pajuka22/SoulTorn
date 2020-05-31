@@ -1,9 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+[RequireComponent(typeof(MovementScript))]
 public class AbilityParent : MonoBehaviour
 {
+    public bool on;
+    Player player;
     // Start is called before the first frame update
     void Start()
     {
@@ -31,5 +33,22 @@ public class AbilityParent : MonoBehaviour
     protected virtual void Activate(Enemy e1, Enemy e2)
     {
 
+    }
+    protected virtual void Activate(AbilityParent a)
+    {
+
+    }
+    public virtual void Deactivate()
+    {
+
+    }
+    public virtual void Enable()
+    {
+        on = true;
+    }
+    public virtual void Disable()
+    {
+        Deactivate();
+        on = false;
     }
 }
