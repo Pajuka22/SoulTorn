@@ -7,7 +7,7 @@ public class AbilityParent : MonoBehaviour
     [System.NonSerialized]
     public bool unlocked;
     [System.NonSerialized]
-    public bool on;
+    public bool on;//optional
     Player player;
     // Start is called before the first frame update
     void Start()
@@ -38,6 +38,10 @@ public class AbilityParent : MonoBehaviour
 
     }
     protected virtual void Activate(AbilityParent a)
+    {
+
+    }
+    protected virtual void Activate(Enemy e, float damage)
     {
 
     }

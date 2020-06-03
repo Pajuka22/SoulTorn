@@ -50,11 +50,12 @@ public class MovementScript : MonoBehaviour
     void Start()
     {
         inDodgeRoll = false;
-        Load();
+        //Load();
         direction = 0;
         rb = GetComponent<Rigidbody2D>();
         states = GetComponent<PlayerStates>();
         walkSpeed += additionalSpeed;
+        rb.gravityScale = GlobalControl.GravityScale;
     }
 
     // Update is called once per frame
@@ -161,12 +162,12 @@ public class MovementScript : MonoBehaviour
     private void MoveCharacter()
     {
         currentSpeed += direction * (accelerationRate * Time.fixedDeltaTime);
-        Debug.Log(direction * walkSpeed + currentSpeed);
+        Debug.Log(currentSpeed);
         rb.velocity = new Vector2((direction * walkSpeed) + currentSpeed, jump && jumpIndex <= jumpHeight.Count - 1 ? CalculateJumpSpeed() : rb.velocity.y);
         if (UtilityLibrary.sign(direction) != UtilityLibrary.sign(currentSpeed) && currentSpeed != 0)
         {
             int currentSign = UtilityLibrary.sign(currentSpeed);
-            currentSpeed -= UtilityLibrary.sign(currentSpeed) * decelerationRate;
+            currentSpeed -= UtilityLibrary.sign(currentSpeed) * decelerationRate * Time.fixedDeltaTime;
             if (currentSign != UtilityLibrary.sign(currentSpeed))
             {
                 currentSpeed = 0;
@@ -184,7 +185,7 @@ public class MovementScript : MonoBehaviour
     {
         states.current = PlayerStates.AnimStates.jump;
         //Debug.Log(Mathf.Sqrt(2 * GlobalControl.GravityScale * jumpHeight[jumpIndex]));
-        return Mathf.Sqrt(2 * GlobalControl.GravityScale * jumpHeight[jumpIndex]);
+        return Mathf.Sqrt(2 * rb.gravityScale * jumpHeight[jumpIndex]);
     }
 
     private bool CheckGrounded()
@@ -257,6 +258,9 @@ public class MovementScript : MonoBehaviour
             accelerationRate = 0;
         }
         else
+        {
+
+        }
             accelerationRate = GlobalControl.Instance.accelerationRate;
         maxSpeed = GlobalControl.Instance.maxSpeed;
     }
