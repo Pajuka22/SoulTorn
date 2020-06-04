@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GlobalControl : MonoBehaviour
@@ -46,6 +47,7 @@ public class GlobalControl : MonoBehaviour
 
     public int difficulty; //0: easy, 1: medium, 2: difficult
     public int level; //how many levels the player has completed so far
+    public int levelAt;
 
     public int blueSouls, redSouls = 0; //total num of blue & red souls
     // public bool openBlueShop = false; //whether or not the shop scene should be Virgil's shop when opened
