@@ -8,6 +8,8 @@ public class AbilityManager : MonoBehaviour
     public static AbilityManager instance;
     public ActivatedParent[] activatedAbilities = new ActivatedParent[3];
     public PassiveParent[] passiveAbilities = new PassiveParent[5];
+    [System.NonSerialized]
+    public bool[] abilityUnlockStatuses;
 
     // Start is called before the first frame update
     void Start()
@@ -77,5 +79,16 @@ public class AbilityManager : MonoBehaviour
         {
             a.Enable();
         }
+    }
+    public bool[] GetAllAbilitiesUnlockStatus()
+    {
+        abilityUnlockStatuses = new bool[GetComponents<AbilityParent>().Length];
+        int i = 0;
+        foreach(AbilityParent a in GetComponents<AbilityParent>())
+        {
+            abilityUnlockStatuses[i] = a.unlocked;
+            i++;
+        }
+        return abilityUnlockStatuses;
     }
 }
