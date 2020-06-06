@@ -35,6 +35,8 @@ public class SaveFile : MonoBehaviour
     public bool canDodge;
     public bool canDodgeRoll;
     public bool canAccelerate;
+    public bool[] abilitiesActive = new bool[AbilityManager.instance.activatedAbilities.Length];
+    public bool[] abilitiesPassive = new bool[AbilityManager.instance.passiveAbilities.Length];
 
     //Probably important
     public List<Skill> blueSkills, redSkills; //this might become a list or dictionary at some point
@@ -90,6 +92,17 @@ public class SaveFile : MonoBehaviour
         playerLocation[1] = player.transform.position.y;
 
         //NEW ability stuff
+        for (int x = 0; x <abilitiesActive.Length; x++ )
+        {
+            abilitiesActive[x] = AbilityManager.instance.activatedAbilities[x];
+
+
+        }
+        for (int y = 0; y < abilitiesPassive.Length; y++ )
+        {
+            abilitiesPassive[y] = AbilityManager.instance.passiveAbilities[y];
+        }
+
     }
 
     public SaveFile(int fileNum1)
