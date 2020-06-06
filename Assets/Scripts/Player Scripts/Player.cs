@@ -205,6 +205,12 @@ public class Player : MonoBehaviour
         health = GlobalControl.Instance.health;
         actives = GlobalControl.Instance.actives;
         passives = GlobalControl.Instance.passives;
+        Vector2 playerPos;
+        playerPos.x = SaveSystem.LoadPlayer(GlobalControl.Instance.saveFile).playerLocation[0];
+        playerPos.y = SaveSystem.LoadPlayer(GlobalControl.Instance.saveFile).playerLocation[1];
+        transform.position = playerPos;
+
+
     }
 
     public void TakeDamage(int damage)
@@ -397,4 +403,6 @@ public class Player : MonoBehaviour
             currentGrab = StartCoroutine(Grappled(damage));
         }
     }
+
+    //Save file stuff
 }

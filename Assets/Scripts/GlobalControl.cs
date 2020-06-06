@@ -53,6 +53,9 @@ public class GlobalControl : MonoBehaviour
     // public bool openBlueShop = false; //whether or not the shop scene should be Virgil's shop when opened
     public List<Skill> blueSkills, redSkills; //this might become a list or dictionary at some point
 
+    //save file variable
+    public int saveFile;
+
     void Awake()
     {
         if (Instance == null)
@@ -124,5 +127,54 @@ public class GlobalControl : MonoBehaviour
     {
         print("activate");
         //Invoke
+    }
+
+    //Save file stuff
+
+    public void OpenSaveFile(int fileNum)
+    {
+        SaveFile saved = SaveSystem.LoadPlayer(fileNum);
+        speed = saved.speed;
+        jumpProcs = saved.jumpProcs;
+        atkDamage = saved.atkDamage;
+        maxHealth = saved.maxHealth;
+        health = saved.health;
+        dodgeLength = saved.dodgeLength;
+        maxSpeed = saved.maxSpeed;
+        accelerationRate = saved.accelerationRate;
+        decelerationRate = saved.decelerationRate;
+        InvincibleFrames = saved.InvincibleFrames;
+        for (int x = 0; x < saved.passives.Length; x++)
+        {
+            passives[x] = saved.passives[x];
+        }
+        for (int y = 0; y < saved.actives.Length; y++)
+        {
+            actives[y] = saved.actives[y];
+        }
+
+        canDodge = saved.canDodge;
+        canDodgeRoll = saved.canDodgeRoll;
+        canAccelerate = saved.canAccelerate;
+        blueSouls = saved.blueSouls;
+        redSouls = saved.redSouls;
+        level = saved.level;
+
+        difficulty = saved.difficulty;
+        /*  blueSkillName = new string[GlobalControl.Instance.blueSkills.Capacity];
+          redSkillName = new string[GlobalControl.Instance.redSkills.Capacity];
+          for (int x = 0; x < GlobalControl.Instance.blueSkills.Capacity; x++)
+          {
+              blueSkills[x] = GlobalControl.Instance.blueSkills[x];
+              blueSkillName[x] = GlobalControl.Instance.blueSkills[x].nameOfSkill;
+
+          }
+          for (int x = 0; x < GlobalControl.Instance.redSkills.Capacity; x++)
+          {
+              redSkills[x] = GlobalControl.Instance.redSkills[x];
+              blueSkillName[x] = GlobalControl.Instance.blueSkills[x].nameOfSkill;
+          }*/
+
+        saveFile = saved.fileNum;
     }
 }

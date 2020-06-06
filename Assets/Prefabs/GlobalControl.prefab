@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1758157248757863581}
   - component: {fileID: 1758157248757863570}
+  - component: {fileID: 2010977332331359901}
   m_Layer: 0
   m_Name: GlobalControl
   m_TagString: Untagged
@@ -47,16 +48,25 @@ MonoBehaviour:
   jumpProcs: 0
   atkDamage: 0
   atkLag: 0
+  maxHealth: 0
   health: 0
+  maxSpeed: 0
+  dodgeLength: 0
+  accelerationRate: 0
+  decelerationRate: 0
   InvincibleFrames: 0
+  passives: []
+  actives: []
   canDodge: 0
   canDodgeRoll: 0
+  canAccelerate: 0
   easyScenes: []
   medScenes: []
   hardScenes: []
   dialogue: []
   difficulty: 0
   level: 0
+  levelAt: 0
   blueSouls: 0
   redSouls: 0
   blueSkills:
@@ -64,3 +74,26 @@ MonoBehaviour:
   redSkills:
   - {fileID: 11400000, guid: d00562920c5441842b02a9ce0171071d, type: 2}
   - {fileID: 11400000, guid: 382fd251283641c468723607f33783a4, type: 2}
+  saveFile: 0
+--- !u!114 &2010977332331359901
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1758157248757863571}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18354f8cb918ae045aa8b6f79c38dbda, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  activatedAbilities:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  passiveAbilities:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}

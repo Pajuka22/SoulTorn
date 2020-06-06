@@ -26,14 +26,63 @@ public class MainMenuManager : MonoBehaviour
     [SerializeField]
     Button SaveFile3;
 
+    //Save file panel elements
+    [SerializeField]
+    GameObject SavePanel1;
+    [SerializeField]
+    GameObject SavePanel2;
+    [SerializeField]
+    GameObject SavePanel3;
+    [SerializeField]
+    Text saveText;
+    [SerializeField]
+    Text locationText;
+    [SerializeField]
+    Text learnedText;
+    [SerializeField]
+    Text newGameText;
+    [SerializeField]
+    Text saveText2;
+    [SerializeField]
+    Text locationText2;
+    [SerializeField]
+    Text learnedText2;
+    [SerializeField]
+    Text newGameText2;
+    [SerializeField]
+    Text saveText3;
+    [SerializeField]
+    Text locationText3;
+    [SerializeField]
+    Text learnedText3;
+    [SerializeField]
+    Text newGameText3;
+
     //System variables
     bool pressedContinue;
+    
+        bool[] existence = new bool[3];
 
     // Start is called before the first frame update
     void Start()
     {
         FilePanel.SetActive(false);
+
+        for (int x = 0; x <= 2; x++)
+        {
+            existence[x] = SaveSystem.checkExistence(x);
+            print(x + " " +existence[x]);
+        }
+
+
+        SavePanel1.SetActive(false);
+        SavePanel2.SetActive(false);
+        SavePanel3.SetActive(false);
+
+
     }
+
+
 
 
     public void continueButton()
@@ -45,8 +94,45 @@ public class MainMenuManager : MonoBehaviour
         NewGame.GetComponent<Image>().enabled = false;
         NewGame.enabled = false;
         title.transform.localScale = new Vector3(0, 0, 0);
+        SavePanel1.SetActive(true);
+        SavePanel2.SetActive(true);
+        SavePanel3.SetActive(true);
+        if (!existence[0])
+        {
 
+            saveText.transform.localScale = new Vector3(0, 0, 0);
+            locationText.transform.localScale = new Vector3(0, 0, 0);
+            learnedText.transform.localScale = new Vector3(0, 0, 0);
+            newGameText.transform.localScale = new Vector3(1, 1, 1);
 
+        }
+        else {
+            newGameText.transform.localScale = new Vector3(0, 0, 0);
+        }
+         if (!existence[1])
+        {
+            saveText2.transform.localScale = new Vector3(0, 0, 0);
+            locationText2.transform.localScale = new Vector3(0, 0, 0);
+            learnedText2.transform.localScale = new Vector3(0, 0, 0);
+            newGameText2.transform.localScale = new Vector3(1, 1, 1);
+        }
+        else
+        {
+
+            newGameText2.transform.localScale = new Vector3(0, 0, 0);
+        }
+        if (!existence[2])
+        {
+            saveText3.transform.localScale = new Vector3(0, 0, 0);
+            locationText3.transform.localScale = new Vector3(0, 0, 0);
+            learnedText3.transform.localScale = new Vector3(0, 0, 0);
+            newGameText3.transform.localScale = new Vector3(1, 1, 1);
+        }
+        else
+        {
+
+            newGameText3.transform.localScale = new Vector3(0, 0, 0);
+        }
     }
 
     public void newGameButton()
@@ -68,6 +154,42 @@ public class MainMenuManager : MonoBehaviour
         NewGame.GetComponent<Image>().enabled = true;
         NewGame.enabled = true;
         title.transform.localScale = new Vector3(5, 5, 1);
+    }
+
+    public void saveFile(int fileNum)
+    {
+        int sceneNum;
+        bool[] existence = new bool[3];
+        for (int x = 0; x < 2; x++ )
+        {
+            existence[x] = SaveSystem.checkExistence(x);
+        }
+        if (pressedContinue)
+        {
+            
+            if (existence[fileNum])
+            {
+                //int sceneNum;
+
+                GlobalControl.Instance.OpenSaveFile(fileNum);
+                sceneNum = SaveSystem.LoadPlayer(fileNum).levelAt;
+                SceneManager.LoadScene(sceneNum);
+
+            }
+            else
+            {
+                SaveSystem.CreateFile(fileNum);
+                sceneNum = SaveSystem.LoadPlayer(fileNum).levelAt;
+                SceneManager.LoadScene(sceneNum);
+            }
+        }
+        else
+        {
+            SaveSystem.CreateFile(fileNum);
+            sceneNum = SaveSystem.LoadPlayer(fileNum).levelAt;
+            SceneManager.LoadScene(sceneNum);
+
+        }
     }
 
 

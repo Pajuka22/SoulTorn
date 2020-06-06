@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
+//[System.Serializable]
 public class SaveFile : MonoBehaviour
 {
     //Player Variables
@@ -29,7 +29,7 @@ public class SaveFile : MonoBehaviour
     public float[] playerLocation;
 
 
-    public int blueSouls, redSouls = 0; //total num of blue & red souls
+    public int blueSouls, redSouls; //total num of blue & red souls
 
     //Abilities    
     public bool canDodge;
@@ -40,6 +40,11 @@ public class SaveFile : MonoBehaviour
     public List<Skill> blueSkills, redSkills; //this might become a list or dictionary at some point
     public string[] blueSkillName;
     public string[] redSkillName;
+
+    //System Variables
+    public int fileNum;
+
+
 
     public SaveFile(Player player)
     {
@@ -54,14 +59,7 @@ public class SaveFile : MonoBehaviour
         accelerationRate = GlobalControl.Instance.accelerationRate;
         decelerationRate = GlobalControl.Instance.decelerationRate;
         InvincibleFrames = GlobalControl.Instance.InvincibleFrames;
-        for (int x = 0; x < GlobalControl.Instance.passives.Length; x++)
-        {
-            passives[x] = GlobalControl.Instance.passives[x];
-        }
-        for (int y = 0; y < GlobalControl.Instance.actives.Length; y++)
-        {
-            actives[y] = GlobalControl.Instance.actives[y];
-        }
+
 
         canDodge = GlobalControl.Instance.canDodge;
         canDodgeRoll = GlobalControl.Instance.canDodgeRoll;
@@ -90,6 +88,37 @@ public class SaveFile : MonoBehaviour
         playerLocation = new float[2];
         playerLocation[0] = player.transform.position.x;
         playerLocation[1] = player.transform.position.y;
+
+        //NEW ability stuff
+    }
+
+    public SaveFile(int fileNum1)
+    {
+        //This is for whenever the file is new
+        fileNum = fileNum1;
+        speed = 4f;
+        jumpProcs = 1;
+        atkDamage = 10;
+        atkLag = 20;
+        maxHealth = 100;
+        health = 100;
+        GravityScale = 3f;
+        maxSpeed = 4f;
+        dodgeLength = 0f;
+        accelerationRate = 0f;
+        decelerationRate = 0f;
+        InvincibleFrames = 0.5f;
+
+
+
+        redSouls = 0;
+        blueSouls = 0;
+
+        difficulty = 1;
+        levelAt = 12;
+        level = 0;
+        
+
     }
 
     // Start is called before the first frame update
