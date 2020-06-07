@@ -15,13 +15,13 @@ public static class SaveSystem
         string path = "";
         switch (num)
         {
-            case 1:
+            case 0:
                 path = Application.persistentDataPath + "/player.pure";
                 break;
-            case 2:
+            case 1:
                 path = Application.persistentDataPath + "/player.impure";
                 break;
-            case 3:
+            case 2:
                 path = Application.persistentDataPath + "/player.hallowed";
                 break;
         }
