@@ -40,13 +40,13 @@ public static class SaveSystem
         string path = "";
         switch (fileNum)
         {
-            case 1:
+            case 0:
                 path = Application.persistentDataPath + "/player.pure";
                 break;
-            case 2:
+            case 1:
                 path = Application.persistentDataPath + "/player.impure";
                 break;
-            case 3:
+            case 2:
                 path = Application.persistentDataPath + "/player.hallowed";
                 break;
 
@@ -77,7 +77,7 @@ public static class SaveSystem
 
     public static void CreateFile(int fileNum)
     {
-        if (fileNum == 1)
+        if (fileNum == 0)
         {
             BinaryFormatter formatter = new BinaryFormatter();
             SaveFile data = new SaveFile(fileNum);
@@ -88,7 +88,7 @@ public static class SaveSystem
             formatter.Serialize(stream, data);
             stream.Close();
         }
-        else if (fileNum == 2)
+        else if (fileNum == 1)
         {
             BinaryFormatter formatter = new BinaryFormatter();
             SaveFile data = new SaveFile(fileNum);
@@ -97,6 +97,7 @@ public static class SaveSystem
 
 
             formatter.Serialize(stream, data);
+            checkExistence(1);
             stream.Close();
         }
         else
@@ -117,13 +118,13 @@ public static class SaveSystem
         string path = "";
         switch (num)
         {
-            case 1:
+            case 0:
                 path = Application.persistentDataPath + "/player.pure";
                 break;
-            case 2:
+            case 1:
                 path = Application.persistentDataPath + "/player.impure";
                 break;
-            case 3:
+            case 2:
                 path = Application.persistentDataPath + "/player.hallowed";
                 break;
         }

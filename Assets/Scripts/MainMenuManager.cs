@@ -60,8 +60,8 @@ public class MainMenuManager : MonoBehaviour
 
     //System variables
     bool pressedContinue;
-    
-        bool[] existence = new bool[3];
+    bool[] existence = new bool[3];
+    int[] locations = new int[3];
 
     // Start is called before the first frame update
     void Start()
@@ -72,13 +72,52 @@ public class MainMenuManager : MonoBehaviour
         {
             existence[x] = SaveSystem.checkExistence(x);
             print(x + " " +existence[x]);
-        }
+            locations[x] = 0;
+            //Just to make sure no null exceptions are created^
+            if (existence[x])
+            {
+                locations[x] = SaveSystem.LoadPlayer(x).levelAt;
 
+            }
+            
+        }
+        
 
         SavePanel1.SetActive(false);
         SavePanel2.SetActive(false);
         SavePanel3.SetActive(false);
-
+        
+        //This for loop is to set the LocationTexts
+        for (int y = 0; y <2; y ++)
+        {
+            switch (y)
+            {
+                case 0:
+                    switch (locations[y]) {
+                        case 12:
+                            locationText.text = "Path to the Grand Hall";
+                            break;
+                    }
+                    break;
+                case 1:
+                    switch (locations[y])
+                    {
+                        case 12:
+                            locationText2.text = "Path to the Grand Hall";
+                            break;
+                    }
+                    break;
+                case 2:
+                    switch (locations[y])
+                    {
+                        case 12:
+                            locationText3.text = "Path to the Grand Hall";
+                            break;
+                    }
+                    break;
+            }
+        }
+        //Locations will be upgraded as time goes on
 
     }
 
@@ -108,6 +147,7 @@ public class MainMenuManager : MonoBehaviour
         }
         else {
             newGameText.transform.localScale = new Vector3(0, 0, 0);
+            
         }
          if (!existence[1])
         {
@@ -178,6 +218,7 @@ public class MainMenuManager : MonoBehaviour
             }
             else
             {
+                Debug.Log(fileNum);
                 SaveSystem.CreateFile(fileNum);
                 sceneNum = SaveSystem.LoadPlayer(fileNum).levelAt;
                 SceneManager.LoadScene(sceneNum);
