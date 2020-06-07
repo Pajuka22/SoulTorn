@@ -8,11 +8,24 @@ using UnityEngine.SceneManagement;
 public static class SaveSystem
 {
     // Start is called before the first frame update
-    public static void SavePlayer (Player player)
+    public static void SavePlayer (Player player, int num)
     {
         BinaryFormatter formatter = new BinaryFormatter();
         SaveFile data = new SaveFile(player);
-        string path = Application.persistentDataPath + "/player.soul";
+        string path = "";
+        switch (num)
+        {
+            case 1:
+                path = Application.persistentDataPath + "/player.pure";
+                break;
+            case 2:
+                path = Application.persistentDataPath + "/player.impure";
+                break;
+            case 3:
+                path = Application.persistentDataPath + "/player.hallowed";
+                break;
+        }
+        //path = Application.persistentDataPath + "/player.soul";
         FileStream stream = new FileStream(path, FileMode.Create);
 
 
@@ -39,6 +52,7 @@ public static class SaveSystem
 
 
         }
+        Debug.Log(path);
    //     path = Application.persistentDataPath + "/player.soul";
         if (File.Exists(path))
         {
@@ -113,6 +127,7 @@ public static class SaveSystem
                 path = Application.persistentDataPath + "/player.hallowed";
                 break;
         }
+        Debug.Log(path);
         return File.Exists(path);
     }
 }

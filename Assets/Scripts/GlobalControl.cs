@@ -29,7 +29,7 @@ public class GlobalControl : MonoBehaviour
     public bool canDodgeRoll;
     public bool canAccelerate;
     //The abilities
-    
+
     private FileInfo[] easyFileInfo; //array of all scenes with easy difficulty
     public List<string> easyScenes; //list of unvisited scenes with easy difficulty
     private FileInfo[] medFileInfo; //etc.
@@ -94,7 +94,7 @@ public class GlobalControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     public void ResetSceneLists() //call this after the player dies
@@ -104,7 +104,7 @@ public class GlobalControl : MonoBehaviour
 
         easyScenes = new List<string>();
         foreach (FileInfo fileInfo in easyFileInfo)
-            easyScenes.Add(fileInfo.Name);   
+            easyScenes.Add(fileInfo.Name);
         medScenes = new List<string>();
         foreach (FileInfo fileInfo in medFileInfo)
             medScenes.Add(fileInfo.Name);
@@ -144,14 +144,14 @@ public class GlobalControl : MonoBehaviour
         accelerationRate = saved.accelerationRate;
         decelerationRate = saved.decelerationRate;
         InvincibleFrames = saved.InvincibleFrames;
-        for (int x = 0; x < saved.passives.Length; x++)
-        {
-            passives[x] = saved.passives[x];
-        }
-        for (int y = 0; y < saved.actives.Length; y++)
-        {
-            actives[y] = saved.actives[y];
-        }
+        /*    for (int x = 0; x < saved.passives.Length; x++)
+            {
+                passives[x] = saved.passives[x];
+            }
+            for (int y = 0; y < saved.actives.Length; y++)
+            {
+                actives[y] = saved.actives[y];
+            } */
 
         canDodge = saved.canDodge;
         canDodgeRoll = saved.canDodgeRoll;

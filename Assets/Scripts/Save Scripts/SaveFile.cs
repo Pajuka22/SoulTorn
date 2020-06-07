@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-//[System.Serializable]
-public class SaveFile : MonoBehaviour
+[System.Serializable]
+public class SaveFile
 {
     //Player Variables
     public float speed;
@@ -35,13 +35,8 @@ public class SaveFile : MonoBehaviour
     public bool canDodge;
     public bool canDodgeRoll;
     public bool canAccelerate;
-    public bool[] abilitiesActive = new bool[AbilityManager.instance.activatedAbilities.Length];
-    public bool[] abilitiesPassive = new bool[AbilityManager.instance.passiveAbilities.Length];
+    public bool[] abilities;
 
-    //Probably important
-    public List<Skill> blueSkills, redSkills; //this might become a list or dictionary at some point
-    public string[] blueSkillName;
-    public string[] redSkillName;
 
     //System Variables
     public int fileNum;
@@ -68,23 +63,10 @@ public class SaveFile : MonoBehaviour
         canAccelerate = GlobalControl.Instance.canAccelerate;
         blueSouls = GlobalControl.Instance.blueSouls;
         redSouls = GlobalControl.Instance.redSouls;
-        level = GlobalControl.Instance.level;
-        
+        level = GlobalControl.Instance.level;  
         difficulty = GlobalControl.Instance.difficulty;
-        blueSkillName = new string[GlobalControl.Instance.blueSkills.Capacity];
-        redSkillName = new string[GlobalControl.Instance.redSkills.Capacity];
-        for (int x = 0; x < GlobalControl.Instance.blueSkills.Capacity; x++)
-        {
-            blueSkills[x] = GlobalControl.Instance.blueSkills[x];
-            blueSkillName[x] = GlobalControl.Instance.blueSkills[x].nameOfSkill;
-
-        }
-        for (int x = 0; x < GlobalControl.Instance.redSkills.Capacity; x++)
-        {
-            redSkills[x] = GlobalControl.Instance.redSkills[x];
-            blueSkillName[x] = GlobalControl.Instance.blueSkills[x].nameOfSkill;
-        }
-
+        
+        
         //Now you might be  wondering, "What about the scene the player is in?"
         levelAt = player.levelAt;
         playerLocation = new float[2];
@@ -92,16 +74,8 @@ public class SaveFile : MonoBehaviour
         playerLocation[1] = player.transform.position.y;
 
         //NEW ability stuff
-        for (int x = 0; x <abilitiesActive.Length; x++ )
-        {
-            abilitiesActive[x] = AbilityManager.instance.activatedAbilities[x];
+        abilities = AbilityManager.instance.GetAllAbilitiesUnlockStatus();
 
-
-        }
-        for (int y = 0; y < abilitiesPassive.Length; y++ )
-        {
-            abilitiesPassive[y] = AbilityManager.instance.passiveAbilities[y];
-        }
 
     }
 
@@ -122,7 +96,9 @@ public class SaveFile : MonoBehaviour
         decelerationRate = 0f;
         InvincibleFrames = 0.5f;
 
-
+        canDodge = false;
+        canDodgeRoll = false;
+        canAccelerate = false;
 
         redSouls = 0;
         blueSouls = 0;
@@ -130,7 +106,12 @@ public class SaveFile : MonoBehaviour
         difficulty = 1;
         levelAt = 12;
         level = 0;
-        
+
+        playerLocation = new float[2];
+        playerLocation[0] = 0;
+        playerLocation[1] = 8;
+
+        abilities = new bool[AbilityManager.instance.getAbilityLength()];
 
     }
 
