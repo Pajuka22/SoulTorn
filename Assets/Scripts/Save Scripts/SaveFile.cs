@@ -63,10 +63,10 @@ public class SaveFile
         canAccelerate = GlobalControl.Instance.canAccelerate;
         blueSouls = GlobalControl.Instance.blueSouls;
         redSouls = GlobalControl.Instance.redSouls;
-        level = GlobalControl.Instance.level;  
+        level = GlobalControl.Instance.level;
         difficulty = GlobalControl.Instance.difficulty;
-        
-        
+
+
         //Now you might be  wondering, "What about the scene the player is in?"
         levelAt = player.levelAt;
         playerLocation = new float[2];
@@ -110,7 +110,7 @@ public class SaveFile
         playerLocation = new float[2];
         playerLocation[0] = 0;
         playerLocation[1] = 8;
-
+        Debug.Log(AbilityManager.instance.getAbilityLength());
         abilities = new bool[AbilityManager.instance.getAbilityLength()];
 
     }

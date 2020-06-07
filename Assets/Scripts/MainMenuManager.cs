@@ -71,7 +71,7 @@ public class MainMenuManager : MonoBehaviour
         for (int x = 0; x <= 2; x++)
         {
             existence[x] = SaveSystem.checkExistence(x);
-            print(x + " " +existence[x]);
+            print(x + " " + existence[x]);
             locations[x] = 0;
             //Just to make sure no null exceptions are created^
             if (existence[x])
@@ -79,21 +79,22 @@ public class MainMenuManager : MonoBehaviour
                 locations[x] = SaveSystem.LoadPlayer(x).levelAt;
 
             }
-            
+
         }
-        
+
 
         SavePanel1.SetActive(false);
         SavePanel2.SetActive(false);
         SavePanel3.SetActive(false);
-        
+
         //This for loop is to set the LocationTexts
-        for (int y = 0; y <2; y ++)
+        for (int y = 0; y < 2; y++)
         {
             switch (y)
             {
                 case 0:
-                    switch (locations[y]) {
+                    switch (locations[y])
+                    {
                         case 12:
                             locationText.text = "Path to the Grand Hall";
                             break;
@@ -145,11 +146,15 @@ public class MainMenuManager : MonoBehaviour
             newGameText.transform.localScale = new Vector3(1, 1, 1);
 
         }
-        else {
+        else
+        {
+            saveText.transform.localScale = new Vector3(1, 1, 1);
+            locationText.transform.localScale = new Vector3(1, 1, 1);
+            learnedText.transform.localScale = new Vector3(1, 1, 1);
             newGameText.transform.localScale = new Vector3(0, 0, 0);
-            
+
         }
-         if (!existence[1])
+        if (!existence[1])
         {
             saveText2.transform.localScale = new Vector3(0, 0, 0);
             locationText2.transform.localScale = new Vector3(0, 0, 0);
@@ -158,7 +163,9 @@ public class MainMenuManager : MonoBehaviour
         }
         else
         {
-
+            saveText2.transform.localScale = new Vector3(1, 1, 1);
+            locationText2.transform.localScale = new Vector3(1, 1, 1);
+            learnedText2.transform.localScale = new Vector3(1, 1, 1);
             newGameText2.transform.localScale = new Vector3(0, 0, 0);
         }
         if (!existence[2])
@@ -170,7 +177,9 @@ public class MainMenuManager : MonoBehaviour
         }
         else
         {
-
+            saveText3.transform.localScale = new Vector3(1, 1, 1);
+            locationText3.transform.localScale = new Vector3(1, 1, 1);
+            learnedText3.transform.localScale = new Vector3(1, 1, 1);
             newGameText3.transform.localScale = new Vector3(0, 0, 0);
         }
     }
@@ -184,6 +193,21 @@ public class MainMenuManager : MonoBehaviour
         NewGame.GetComponent<Image>().enabled = false;
         NewGame.enabled = false;
         title.transform.localScale = new Vector3(0, 0, 0);
+        SavePanel1.SetActive(true);
+        SavePanel2.SetActive(true);
+        SavePanel3.SetActive(true);
+        saveText.transform.localScale = new Vector3(0, 0, 0);
+        locationText.transform.localScale = new Vector3(0, 0, 0);
+        learnedText.transform.localScale = new Vector3(0, 0, 0);
+        newGameText.transform.localScale = new Vector3(1, 1, 1);
+        saveText2.transform.localScale = new Vector3(0, 0, 0);
+        locationText2.transform.localScale = new Vector3(0, 0, 0);
+        learnedText2.transform.localScale = new Vector3(0, 0, 0);
+        newGameText2.transform.localScale = new Vector3(1, 1, 1);
+        saveText3.transform.localScale = new Vector3(0, 0, 0);
+        locationText3.transform.localScale = new Vector3(0, 0, 0);
+        learnedText3.transform.localScale = new Vector3(0, 0, 0);
+        newGameText3.transform.localScale = new Vector3(1, 1, 1);
     }
 
     public void backButton()
@@ -200,13 +224,13 @@ public class MainMenuManager : MonoBehaviour
     {
         int sceneNum;
         bool[] existence = new bool[3];
-        for (int x = 0; x < 2; x++ )
+        for (int x = 0; x < 2; x++)
         {
             existence[x] = SaveSystem.checkExistence(x);
         }
         if (pressedContinue)
         {
-            
+
             if (existence[fileNum])
             {
                 //int sceneNum;
