@@ -110,8 +110,8 @@ public class SaveFile
         playerLocation = new float[2];
         playerLocation[0] = 0;
         playerLocation[1] = 8;
-        Debug.Log(AbilityManager.instance.getAbilityLength());
-        abilities = new bool[AbilityManager.instance.getAbilityLength()];
+        Debug.Log(AbilityManager.instance.GetAllAbilitiesUnlockStatus());
+        abilities = AbilityManager.instance.GetAllAbilitiesUnlockStatus();
 
     }
 
