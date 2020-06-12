@@ -31,13 +31,16 @@ public class GlobalControl : MonoBehaviour
     //The abilities
 
     private FileInfo[] easyFileInfo; //array of all scenes with easy difficulty
-    public List<string> easyScenes; //list of unvisited scenes with easy difficulty
+    public static List<string> easyScenes; //list of unvisited scenes with easy difficulty
     private FileInfo[] medFileInfo; //etc.
-    public List<string> medScenes;
+    public static List<string> medScenes;
     private FileInfo[] hardFileInfo;
-    public List<string> hardScenes;
+    public static List<string> hardScenes;
+
     private FileInfo[] dialogueFileInfo;
-    public List<string> dialogue;
+    public static List<string> dialogue;
+    public static List<string> nioFT;
+    public static List<string> virgilFT;
 
     public readonly static int MAIN_SCENE_NUM = 0;
     public readonly static int VSHOP_SCENE_NUM = 1;
@@ -50,7 +53,6 @@ public class GlobalControl : MonoBehaviour
     public int levelAt;
 
     public int blueSouls, redSouls = 0; //total num of blue & red souls
-    // public bool openBlueShop = false; //whether or not the shop scene should be Virgil's shop when opened
     public List<Skill> blueSkills, redSkills; //this might become a list or dictionary at some point
 
     //save file variable
@@ -83,11 +85,26 @@ public class GlobalControl : MonoBehaviour
         DirectoryInfo easyDirInfo = new DirectoryInfo("Assets/Scenes/Easy");
         DirectoryInfo medDirInfo = new DirectoryInfo("Assets/Scenes/Medium");
         DirectoryInfo hardDirInfo = new DirectoryInfo("Assets/Scenes/Hard");
-        DirectoryInfo dialogueDirInfo = new DirectoryInfo("Assets/Dialogue");
+        DirectoryInfo dialogueDirInfo = new DirectoryInfo("Assets/Dialogue/Quiet Area");
         easyFileInfo = easyDirInfo.GetFiles("*.unity");
         medFileInfo = medDirInfo.GetFiles("*.unity");
         hardFileInfo = hardDirInfo.GetFiles("*.unity");
         dialogueFileInfo = dialogueDirInfo.GetFiles("*.txt");
+
+        nioFT = new List<string>();
+        StreamReader sr = new StreamReader("Assets/Dialogue/Flavor Text/Nio.txt");
+        for(string line = sr.ReadLine(); line != null; line = sr.ReadLine())
+            nioFT.Add(line);
+        sr.Close();
+        sr.Dispose();
+
+        virgilFT = new List<string>();
+        sr = new StreamReader("Assets/Dialogue/Flavor Text/Virgil.txt");
+        for (string line = sr.ReadLine(); line != null; line = sr.ReadLine())
+            virgilFT.Add(line);
+        sr.Close();
+        sr.Dispose();
+
         ResetSceneLists();
     }
 
@@ -113,7 +130,7 @@ public class GlobalControl : MonoBehaviour
             hardScenes.Add(fileInfo.Name);
         dialogue = new List<string>();
         foreach (FileInfo fileInfo in dialogueFileInfo)
-            dialogue.Add("Assets/Dialogue/" + fileInfo.Name);
+            dialogue.Add("Assets/Dialogue/Quiet Area/" + fileInfo.Name);
     }
 
     public IEnumerator Die()

@@ -91,25 +91,25 @@ public class LevelEnd : MonoBehaviour
 
     static void LoadEasyLevel()
     {
-        int rndIndex = Random.Range(0, GlobalControl.Instance.easyScenes.Count);
-        string sceneName = GlobalControl.Instance.easyScenes[rndIndex];
-        GlobalControl.Instance.easyScenes.RemoveAt(rndIndex);
+        int rndIndex = Random.Range(0, GlobalControl.easyScenes.Count);
+        string sceneName = GlobalControl.easyScenes[rndIndex];
+        GlobalControl.easyScenes.RemoveAt(rndIndex);
         SceneManager.LoadScene("Assets/Scenes/Easy/" + sceneName);
     }
 
     static void LoadMediumLevel()
     {
-        int rndIndex = Random.Range(0, GlobalControl.Instance.medScenes.Count);
-        string sceneName = GlobalControl.Instance.medScenes[rndIndex];
-        GlobalControl.Instance.medScenes.RemoveAt(rndIndex);
+        int rndIndex = Random.Range(0, GlobalControl.medScenes.Count);
+        string sceneName = GlobalControl.medScenes[rndIndex];
+        GlobalControl.medScenes.RemoveAt(rndIndex);
         SceneManager.LoadScene("Assets/Scenes/Medium/" + sceneName);
     }
 
     static void LoadHardLevel()
     {
-        int rndIndex = Random.Range(0, GlobalControl.Instance.hardScenes.Count);
-        string sceneName = GlobalControl.Instance.hardScenes[rndIndex];
-        GlobalControl.Instance.hardScenes.RemoveAt(rndIndex);
+        int rndIndex = Random.Range(0, GlobalControl.hardScenes.Count);
+        string sceneName = GlobalControl.hardScenes[rndIndex];
+        GlobalControl.hardScenes.RemoveAt(rndIndex);
         SceneManager.LoadScene("Assets/Scenes/Hard/" + sceneName);
     }
 

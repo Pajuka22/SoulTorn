@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.IO;
 
 public class SkillTreeShop : MonoBehaviour
 {
@@ -35,17 +36,18 @@ public class SkillTreeShop : MonoBehaviour
     {
         buyPanel.SetActive(false);
         messagePanel.SetActive(false);
-        dialogueText.text = "";
 
         if (red)
         {
             soulsText.text = "Red Souls: " + GlobalControl.Instance.redSouls.ToString();
+            dialogueText.text = GlobalControl.nioFT[Random.Range(0, GlobalControl.nioFT.Count)];
             foreach (Skill skill in GlobalControl.Instance.redSkills)
                 DisplaySkillButton(skill);
         }
         else
         {
             soulsText.text = "Blue Souls: " + GlobalControl.Instance.blueSouls.ToString();
+            dialogueText.text = GlobalControl.virgilFT[Random.Range(0, GlobalControl.virgilFT.Count)];
             foreach (Skill skill in GlobalControl.Instance.blueSkills)
                 DisplaySkillButton(skill);
         }

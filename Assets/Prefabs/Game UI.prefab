@@ -608,6 +608,7 @@ GameObject:
   - component: {fileID: 8236077249467316569}
   - component: {fileID: 4051850913761479915}
   - component: {fileID: 3216123546485728687}
+  - component: {fileID: 1937088704875391940}
   m_Layer: 5
   m_Name: Dialogue Box
   m_TagString: Untagged
@@ -675,6 +676,23 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &1937088704875391940
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2193673456804816241}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd652f72d20a88d4292b06b2e52ca373, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nioHead: {fileID: 21300000, guid: 22bd01b8109b6e0418f7224d14a362a7, type: 3}
+  virgilHead: {fileID: 21300000, guid: 754dbd79bce7bfe45a7d8879e9bbc542, type: 3}
+  speakerHead: {fileID: 2123791481974887089}
+  speakerName: {fileID: 5341380670391491464}
+  dialogue: {fileID: 7407587765746513359}
 --- !u!1 &2722812683270665049
 GameObject:
   m_ObjectHideFlags: 0

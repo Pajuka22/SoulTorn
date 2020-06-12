@@ -1,7 +1,0 @@
-7|N|I don’t see what’s so wrong with eating pizza with a knife and fork.
-3|V|YOU DON’T SEE WHAT’S SO WRONG?!
-3|N|Yes. I don’t see what’s so wrong.
-2|V|REALLY?!
-5|N|Yes, really. Now can I go back to ordering my pizza—
-7|V|NO. I’M NOT LETTING YOU ORDER PIZZA IF YOU’RE GOING TO EAT IT LIKE THAT.
-2|N|Rude.

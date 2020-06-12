@@ -7,41 +7,67 @@ using System.IO;
 
 public class DialogueManager : MonoBehaviour
 {
-    [SerializeField] private Text dialogueBox;
+    [SerializeField] private Sprite nioHead;
+    [SerializeField] private Sprite virgilHead;
+
+    [SerializeField] private Image speakerHead;
+    [SerializeField] private Text speakerName;
+    [SerializeField] private Text dialogue;
+
     StreamReader sr;
+    bool done;
     //float timer;
 
     void Start()
     {
-        if(GlobalControl.Instance.dialogue.Count == 0)
+        done = false;
+        if(GlobalControl.dialogue.Count == 0)
         {
-            print("ERROR: not enough dialogues (Start in DialogueManager)");
-            LevelEnd.LoadLevel();
+            dialogue.text = "ERROR: not enough dialogue options";
+            // LevelEnd.LoadLevel();
         }
         else
         {
-            sr = new StreamReader(GlobalControl.Instance.dialogue[0]);
-            GlobalControl.Instance.dialogue.RemoveAt(0);
-            dialogueBox.text = sr.ReadLine();
+            int rndIndex = Random.Range(0, GlobalControl.dialogue.Count);
+            sr = new StreamReader(GlobalControl.dialogue[rndIndex]);
+            GlobalControl.dialogue.RemoveAt(rndIndex);
+            ShowNextLine();
         }
     }
 
     void Update()
     {
-        if (/*timer < 0 || */Input.GetMouseButtonDown(0))
-        {
-            string line = sr.ReadLine();
-            if (line != null)
-                dialogueBox.text = line;
-            else
-            {
-                sr.Close();
-                sr.Dispose();
-            }
-        }
+        if (/*timer < 0 || */Input.GetMouseButtonDown(0) && !done)
+            ShowNextLine();
         /*else
         {
             timer -= Time.deltaTime;
         }*/
+    }
+
+    void ShowNextLine()
+    {
+        string line = sr.ReadLine();
+        if (line == null)
+        {
+            sr.Close();
+            sr.Dispose();
+            done = true;
+        }
+        else
+        {
+            if (line[0] == 'N')
+            {
+                speakerHead.sprite = nioHead;
+                speakerName.text = "Nio";
+            }
+            else
+            {
+                speakerHead.sprite = virgilHead;
+                speakerName.text = "Virgil";
+            }
+            dialogue.text = line.Remove(0, 3);
+            print(line.Remove(0, 3));
+        }
     }
 }
