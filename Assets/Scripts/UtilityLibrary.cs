@@ -36,5 +36,9 @@ public class UtilityLibrary : MonoBehaviour
         return obj.GetComponent<T>() != null;
     }
 
+    public static Vector2 LocalToWorld2DRotOnly(Vector2 vector, Transform space)
+    {
+        return vector.x * space.right + vector.y * space.up;
+    }
 
 }

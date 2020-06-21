@@ -8,4 +8,7 @@ EditorBuildSettings:
   - enabled: 0
     path: 
     guid: 00000000000000000000000000000000
+  - enabled: 1
+    path: Assets/Scenes/Kaushik's Scene.unity
+    guid: 7a4fa23f0d038c146a80fa50f04be5f3
   m_configObjects: {}

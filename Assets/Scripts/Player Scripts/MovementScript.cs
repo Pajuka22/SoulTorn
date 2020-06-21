@@ -162,7 +162,7 @@ public class MovementScript : MonoBehaviour
     private void MoveCharacter()
     {
         currentSpeed += direction * (accelerationRate * Time.fixedDeltaTime);
-        Debug.Log(currentSpeed);
+        //Debug.Log(currentSpeed);
         rb.velocity = new Vector2((direction * walkSpeed) + currentSpeed, jump && jumpIndex <= jumpHeight.Count - 1 ? CalculateJumpSpeed() : rb.velocity.y);
         if (UtilityLibrary.sign(direction) != UtilityLibrary.sign(currentSpeed) && currentSpeed != 0)
         {
@@ -197,11 +197,11 @@ public class MovementScript : MonoBehaviour
             {
                 onGround = true;
                 jumpIndex = 0;
-                Debug.Log("True");
+                //Debug.Log("True");
                 return true;
             }
         }
-        Debug.Log("False");
+        //Debug.Log("False");
         return false;
     }
 
