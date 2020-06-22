@@ -22,7 +22,10 @@ public class Player : MonoBehaviour
 
     [SerializeField]
     GameObject atkPrefab;
-    
+
+    [SerializeField]
+    GameObject fireBallObject;
+
     public int atkLag;
     public bool isAttacking;
     //Prevents the player from being able to execute multiple attacks instantly, adds end lag to attack
@@ -103,7 +106,7 @@ public class Player : MonoBehaviour
                     hitColliderVertical.enabled = true;
                     hitSpriteVertical.transform.localPosition = new Vector2(0, -0.3f);
                     hitSpriteVertical.GetComponent<SpriteRenderer>().enabled = true;
-                    
+
                 }
                 else if (Input.GetKey(KeyCode.UpArrow))
                 {
@@ -117,11 +120,16 @@ public class Player : MonoBehaviour
                     hitCollider.enabled = true;
                     hitSprite.GetComponent<SpriteRenderer>().enabled = true;
                 }
-                
+
             }
             if (Input.GetKeyDown(KeyCode.C))
             {
                 StartCoroutine(ChainAttack());
+            }
+            if (Input.GetKeyDown(KeyCode.X))
+            {
+                print("called x");
+                StartCoroutine(FireballSkill());
             }
         }
         //Makes sure the player cannot act while dead
@@ -148,15 +156,15 @@ public class Player : MonoBehaviour
             Dodge();
         }*/
 
-/*        if (timesJumped == 3)
-        {
-            stunned = false;
-            cState = State.Idle;
-            timesJumped = 0;
-            print("freedom");
-            StartCoroutine(InvincibleFrames());
-            //StopCoroutine(currentGrab);
-        }*/
+        /*        if (timesJumped == 3)
+                {
+                    stunned = false;
+                    cState = State.Idle;
+                    timesJumped = 0;
+                    print("freedom");
+                    StartCoroutine(InvincibleFrames());
+                    //StopCoroutine(currentGrab);
+                }*/
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -245,19 +253,19 @@ public class Player : MonoBehaviour
         }
         //How far away from the player the attack is, horizontally
 
-        var spawnVec = new Vector3(Xplace, this.transform.position.y+Yspacing, this.transform.position.z);
+        var spawnVec = new Vector3(Xplace, this.transform.position.y + Yspacing, this.transform.position.z);
 
         print("spawning at " + spawnVec);
         GameObject hb = Instantiate(atk, spawnVec, Quaternion.identity);
-            hb.GetComponent<PlayerAttack>().setDimensions(height, width);
-            if (isBox)
-            {
-                hb.GetComponent<PlayerAttack>().Box();
-            }
-            else
-            {
-                hb.GetComponent<PlayerAttack>().Capsule();
-            }
+        hb.GetComponent<PlayerAttack>().setDimensions(height, width);
+        if (isBox)
+        {
+            hb.GetComponent<PlayerAttack>().Box();
+        }
+        else
+        {
+            hb.GetComponent<PlayerAttack>().Capsule();
+        }
         hb.GetComponent<PlayerAttack>().setDamage(damage);
         return hb;
     }
@@ -279,7 +287,7 @@ public class Player : MonoBehaviour
     public GameObject makeAttackBox(int damage, bool isBox, float height, float width, GameObject atk, float Xspacing, float Yspacing, bool isVertical)
     {
         GameObject i = makeAttackBox(damage, isBox, height, width, atk, Xspacing, Yspacing);
-        if(isVertical == true)
+        if (isVertical == true)
         {
             i.GetComponent<PlayerAttack>().rotateCapsule();
         }
@@ -337,7 +345,7 @@ public class Player : MonoBehaviour
         hb7.GetComponent<PlayerAttack>().Capsule();
         yield return new WaitForSeconds(.05f);
         Destroy(hb7);
-        
+
         GameObject hb8 = makeAttackBox(10, false, 1.8f, .25f, atkPrefab, 1.01f, 0);
         hb8.GetComponent<PlayerAttack>().Capsule();
         yield return new WaitForSeconds(.05f);
@@ -363,7 +371,6 @@ public class Player : MonoBehaviour
             if (!spriteR.flipX)
             {
                 rb.AddForce(new Vector2(10, 0));
-
             }
             else
             {
@@ -392,6 +399,16 @@ public class Player : MonoBehaviour
                 currentGrab = StartCoroutine(Grappled(damage));
             }
         }
+    }
+
+    IEnumerator FireballSkill()
+    {
+        yield return new WaitForSeconds(1.5f);
+        float posX = transform.position.x;
+        float posY = transform.position.y;
+        GameObject temp = Instantiate(fireBallObject, new Vector3(posX, posY, 0), Quaternion.identity);
+        temp.GetComponent<FireballScript>().setSpeed(10);
+        isAttacking = true;
     }
 
     public void SetStateToStun(int damage)
