@@ -21,6 +21,8 @@ public class CameraController : MonoBehaviour
     Vector2 startPosition;
     public MovementScript player;
     public float zDistanceFromPlayer;
+    [System.NonSerialized]
+    public float angle;
     private void Start()
     {
         cam = GetComponent<Camera>();
@@ -30,6 +32,7 @@ public class CameraController : MonoBehaviour
         startData.Set(defaultData);
         endData.Set(defaultData);
         zDistanceFromPlayer = transform.position.z - player.transform.position.z;
+        angle = Mathf.Atan(cam.rect.height / zDistanceFromPlayer);
     }
     private void Update()
     {
@@ -98,5 +101,10 @@ public class CameraController : MonoBehaviour
         float y = Vector2.Dot(v, player.transform.up) / player.transform.up.magnitude;
         return new Vector2(x, y);
 
+    }
+    private void OnDrawGizmosSelected()
+    {
+        Debug.DrawLine(transform.position, Vector3.right * currentData.camSize);
+        Debug.DrawLine(transform.position, transform.position + Vector3.up * currentData.camSize);
     }
 }
