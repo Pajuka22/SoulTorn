@@ -102,9 +102,4 @@ public class CameraController : MonoBehaviour
         return new Vector2(x, y);
 
     }
-    private void OnDrawGizmosSelected()
-    {
-        Debug.DrawLine(transform.position, Vector3.right * currentData.camSize);
-        Debug.DrawLine(transform.position, transform.position + Vector3.up * currentData.camSize);
-    }
 }
