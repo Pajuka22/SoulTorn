@@ -9,7 +9,8 @@ using UnityEngine.SocialPlatforms;
 [RequireComponent(typeof(Camera))]
 public class CameraController : MonoBehaviour
 {
-    private Camera cam;
+    [NonSerialized]
+    public Camera cam;
     [SerializeField]
     private ZoomData defaultData = new ZoomData();
     [SerializeField]
@@ -23,6 +24,8 @@ public class CameraController : MonoBehaviour
     public float zDistanceFromPlayer;
     [System.NonSerialized]
     public float angle;
+
+    public Vector3 startPos;
     private void Start()
     {
         cam = GetComponent<Camera>();
@@ -33,6 +36,8 @@ public class CameraController : MonoBehaviour
         endData.Set(defaultData);
         zDistanceFromPlayer = transform.position.z - player.transform.position.z;
         angle = Mathf.Atan(cam.rect.height / zDistanceFromPlayer);
+        startPos = this.transform.position;
+
     }
     private void Update()
     {
@@ -51,6 +56,7 @@ public class CameraController : MonoBehaviour
             
             DoLerping();
         }
+        
     }
     public void DoLerping()
     {
