@@ -51,9 +51,6 @@ public class ZoomData
     }
     public bool EqualValues(ZoomData data)
     {
-        Debug.Log("Cameras: " + (camSize == data.camSize));
-        Debug.Log("FollowPlayer" + (followPlayer == data.followPlayer));
-        Debug.Log("Centers" + (center == data.center));
         return camSize == data.camSize && followPlayer == data.followPlayer && center == data.center;
     }
 }

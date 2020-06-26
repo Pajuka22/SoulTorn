@@ -11,10 +11,9 @@ public class CameraController : MonoBehaviour
 {
     [NonSerialized]
     public Camera cam;
-    [SerializeField]
-    private ZoomData defaultData = new ZoomData();
-    [SerializeField]
-    private ZoomData currentData = new ZoomData();
+    public ZoomData defaultData = new ZoomData();
+    [NonSerialized]
+    public ZoomData currentData = new ZoomData();
     private ZoomData startData = new ZoomData();
     private ZoomData endData = new ZoomData();
     private float time;
@@ -39,20 +38,19 @@ public class CameraController : MonoBehaviour
         startPos = this.transform.position;
 
     }
-    private void Update()
+    private void FixedUpdate()
     {
         if (time > lerpTime)
         {
             if (currentData.followPlayer)
             {
                 transform.position = (Vector3)(Local2Global(currentData.center)) + zDistanceFromPlayer * currentData.camSize / defaultData.camSize * Vector3.forward;
-                currentData.Set(endData);
-                Debug.Log(currentData.center);
+                //Debug.Log(currentData.center);
             }
         }
         else
         {
-            time += Time.deltaTime;
+            time += Time.fixedDeltaTime;
             
             DoLerping();
         }
@@ -65,19 +63,23 @@ public class CameraController : MonoBehaviour
         cam.orthographicSize = Mathf.Lerp(startData.camSize, endData.camSize, time / lerpTime);
         if (endData.followPlayer != startData.followPlayer)
         {
-            transform.position = (Vector3)Vector2.Lerp(startPosition, endData.followPlayer ? Local2Global(endData.center) : endData.center, time / lerpTime);
+            transform.position = Vector2.Lerp(startPosition, endData.followPlayer ? Local2Global(endData.center) : endData.center, time / lerpTime);
         }
         else if (startData.followPlayer)
         {
-            transform.position = (Vector3)((Vector2)player.transform.position + Vector2.Lerp(startData.center, endData.center, time / lerpTime));
+            transform.position = ((Vector2)player.transform.position + Vector2.Lerp(startData.center, endData.center, time / lerpTime));
         }
         else
         {
-            transform.position = (Vector3)Vector2.Lerp(startPosition, endData.center, time / lerpTime) - Vector3.forward * 10;
+            transform.position = Vector2.Lerp(startPosition, endData.center, time / lerpTime);
         }
         
         currentData.center = currentData.followPlayer ? Global2Local(transform.position - player.transform.position) : (Vector2)transform.position;
         currentData.camSize = cam.orthographicSize;
+        if(time >= lerpTime)
+        {
+            currentData.Set(endData);
+        }
         float z = zDistanceFromPlayer * currentData.camSize / defaultData.camSize;
         transform.position = new Vector3(transform.position.x, transform.position.y, z);
     }
@@ -107,5 +109,9 @@ public class CameraController : MonoBehaviour
         float y = Vector2.Dot(v, player.transform.up) / player.transform.up.magnitude;
         return new Vector2(x, y);
 
+    }
+    float GetZDist()
+    {
+        return Mathf.Abs(transform.position.z - player.transform.position.z);
     }
 }
