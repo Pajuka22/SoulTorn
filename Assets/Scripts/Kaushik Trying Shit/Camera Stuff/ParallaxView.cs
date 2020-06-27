@@ -46,8 +46,7 @@ public class ParallaxView : MonoBehaviour
     public void ChangePos(Vector3 camMoved)
     {
         //camMoved = cam.transform.position - cam.startPos;
-        transform.position = cam.transform.position + relativeStartPos - camMoved.normalized * camMoved.magnitude / (zDepth - cam.transform.position.z * Mathf.Sin(cam.angle));
-        transform.position -= Vector3.forward * transform.position.z;
+        transform.position = (Vector2)(cam.transform.position + relativeStartPos - camMoved.normalized * camMoved.magnitude / (zDepth - cam.transform.position.z * Mathf.Sin(cam.angle)));
         transform.position += new Vector3(0, 0, zDepth);
     }
 }
