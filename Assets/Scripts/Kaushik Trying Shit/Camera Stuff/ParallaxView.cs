@@ -13,6 +13,7 @@ public class ParallaxView : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Debug.Log(cam == null);
         relativeStartPos = transform.position - cam.transform.position;
         zDepth = default;
         startScale = transform.localScale.y;

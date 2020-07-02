@@ -55,7 +55,7 @@ public class MovementScript : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         states = GetComponent<PlayerStates>();
         walkSpeed += additionalSpeed;
-        rb.gravityScale = GlobalControl.GravityScale;
+        //rb.gravityScale = GlobalControl.GravityScale;
     }
 
     // Update is called once per frame
