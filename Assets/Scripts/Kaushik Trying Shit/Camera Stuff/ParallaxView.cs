@@ -13,8 +13,8 @@ public class ParallaxView : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Debug.Log(cam == null);
         relativeStartPos = transform.position - cam.transform.position;
+        Debug.Log(transform.position.z);
         zDepth = default;
         startScale = transform.localScale.y;
 
@@ -23,21 +23,24 @@ public class ParallaxView : MonoBehaviour
     }
 
     // Update is called once per frame
-    void FixedUpdate()
+    void LateUpdate()
     {
         
 
         Vector3 camMoved = cam.transform.position - cam.startPos;
-  
         ChangePos(camMoved);
         ChangeScale(camMoved);
-        //transform.position = new Vector3(transform.position.x, transform.position.y, zDepth);
+        transform.position = new Vector3(transform.position.x, transform.position.y, zDepth);
         
     }
 
     public void ChangeScale(Vector3 camMoved)
     {
         float newScale = startScale * (relativeStartPos.z) / (transform.position.z - cam.transform.position.z) * cam.currentData.camSize / cam.defaultData.camSize;
+        Debug.Log(name + "1: " + cam.currentData.camSize / cam.defaultData.camSize);
+        Debug.Log(name + "2: " + relativeStartPos.z);
+        Debug.Log(name + "3: " + (transform.position.z - cam.transform.position.z));
+
         transform.localScale = new Vector3(newScale, newScale, newScale);
 
         //float desiredAngularScale = startScale * (relativeStartPos.z) / (transform.position.z - cam.transform.position.z);
@@ -47,7 +50,7 @@ public class ParallaxView : MonoBehaviour
     public void ChangePos(Vector3 camMoved)
     {
         //camMoved = cam.transform.position - cam.startPos;
-        transform.position = (Vector2)(cam.transform.position + relativeStartPos - camMoved.normalized * camMoved.magnitude / (zDepth - cam.transform.position.z * Mathf.Sin(cam.angle)));
+        transform.position = (Vector2)(cam.transform.position + relativeStartPos - camMoved / (zDepth - cam.transform.position.z * Mathf.Sin(cam.angle)));
         transform.position += new Vector3(0, 0, zDepth);
     }
 }

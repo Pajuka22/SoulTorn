@@ -35,17 +35,19 @@ public class CameraController : MonoBehaviour
         endData.Set(defaultData);
         zDistanceFromPlayer = transform.position.z - player.transform.position.z;
         angle = Mathf.Atan(cam.rect.height / zDistanceFromPlayer);
-        startPos = this.transform.position;
+        startPos = transform.position;
 
     }
-    private void FixedUpdate()
+    private void LateUpdate()
     {
         if (time > lerpTime)
         {
             if (currentData.followPlayer)
             {
-                transform.position = (Vector3)(Local2Global(currentData.center)) + zDistanceFromPlayer * currentData.camSize / defaultData.camSize * Vector3.forward;
-                //Debug.Log(currentData.center);
+                //transform.position = player.transform.position + (Vector3)(Local2Global(currentData.center)) + zDistanceFromPlayer * currentData.camSize / defaultData.camSize * Vector3.forward;
+                //Debug.Log(currentData.center);\
+                transform.position = Local2Global(currentData.center);
+                transform.position = new Vector3(transform.position.x, transform.position.y, zDistanceFromPlayer * currentData.camSize / defaultData.camSize);
             }
         }
         else
