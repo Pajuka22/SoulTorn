@@ -61,6 +61,11 @@ public class MovementScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        if (jump)
+        {
+            jumpIndex++;
+        }
         if (states.current != PlayerStates.AnimStates.stun && states.current != PlayerStates.AnimStates.death)
         {
             if (Input.GetKeyDown(KeyCode.A))
@@ -162,6 +167,20 @@ public class MovementScript : MonoBehaviour
     private void MoveCharacter()
     {
         currentSpeed += direction * (accelerationRate * Time.fixedDeltaTime);
+        if (currentSpeed >= maxSpeed)
+        {
+            currentSpeed = maxSpeed;
+
+        }
+        else if (Mathf.Abs(currentSpeed) >= maxSpeed)
+        {
+            currentSpeed = (-1) * maxSpeed;
+
+        }
+        if (jump)
+        {
+            jumpIndex++;
+        }
         //Debug.Log(currentSpeed);
         rb.velocity = new Vector2((direction * walkSpeed) + currentSpeed, jump && jumpIndex <= jumpHeight.Count - 1 ? CalculateJumpSpeed() : rb.velocity.y);
         if (UtilityLibrary.sign(direction) != UtilityLibrary.sign(currentSpeed) && currentSpeed != 0)
@@ -172,7 +191,10 @@ public class MovementScript : MonoBehaviour
             {
                 currentSpeed = 0;
             }
+
+   
         }
+        
         if (jump)
         {
             jumpIndex++;
