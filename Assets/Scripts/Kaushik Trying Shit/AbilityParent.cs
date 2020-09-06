@@ -8,7 +8,7 @@ public class AbilityParent : MonoBehaviour
     public bool unlocked;
     [System.NonSerialized]
     public bool on;//optional
-    Player player;
+    protected Player player;
     // Start is called before the first frame update
     void Start()
     {

@@ -6,18 +6,18 @@ public class ActivatedParent : AbilityParent
 {
     // Start is called before the first frame update
     [SerializeField]
-    private bool toPassive;
+    protected bool toPassive;
     [SerializeField]
     [Tooltip("doesn't do anything unless toPassive")]
-    private float timeLimit;
+    protected float timeLimit;
     [SerializeField]
-    private GameObject effect;
+    protected GameObject effect;
     [SerializeField]
     [Tooltip("doesn't do anything unless toPassive")]
-    private PassiveParent.Types trigger;
+    protected PassiveParent.Types trigger;
     [SerializeField]
     [Tooltip("doesn't do anything unless passiveType == hit")]
-    private PassiveParent.HitTypes hitType;
+    protected PassiveParent.HitTypes hitType;
     
 
     void Start()
