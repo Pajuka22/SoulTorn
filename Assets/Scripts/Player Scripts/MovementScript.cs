@@ -26,15 +26,20 @@ public class MovementScript : MonoBehaviour
     private float castRadius;
     [SerializeField]
     private LayerMask whatIsGround;
+    
+
 
     bool movedDuring; //not doing anything rn?
     bool jump;
+    bool firstJump;
 
 
     //Runtime Variables
     bool inDodgeRoll;
     float dodgeLength;
     bool justFinished;
+    bool stunned;
+    int stunnedCounter;
         
 
     //Global Control Bools
@@ -46,120 +51,154 @@ public class MovementScript : MonoBehaviour
     PlayerStates states;
     Rigidbody2D rb;
 
+    Animator ani;
+
     // Start is called before the first frame update
     void Start()
     {
+
+        stunned = false;
         inDodgeRoll = false;
         //Load();
         direction = 0;
         rb = GetComponent<Rigidbody2D>();
         states = GetComponent<PlayerStates>();
         walkSpeed += additionalSpeed;
+        ani = GetComponent<Animator>();
+        stunnedCounter = 0;
         //rb.gravityScale = GlobalControl.GravityScale;
     }
 
     // Update is called once per frame
     void Update()
     {
-
-        if (jump)
+        if (states.current == PlayerStates.AnimStates.stun)
         {
-            jumpIndex++;
+            stunned = true;
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                stunnedCounter++;
+            }
+            if (stunnedCounter == 3)
+            {
+                print("Free");
+                stunned = false;
+                stunnedCounter = 0;
+                states.SetStateToIdle();
+            }
         }
-        if (states.current != PlayerStates.AnimStates.stun && states.current != PlayerStates.AnimStates.death)
+        if (!stunned)
         {
-            if (Input.GetKeyDown(KeyCode.A))
+            if (jump)
             {
-                if (justFinished && direction > 0)
-                {
-                    currentSpeed = 0;
-                    justFinished = false;
-                }
-                //Debug.Log("Left");
-                direction = -1 ;
-
-                //currentSpeed += direction * (accelerationRate * Time.fixedDeltaTime);
-                //Player.Instance.spriteR.flipX = true;
-                if (onGround)
-                {
-                    states.current = states.current == PlayerStates.AnimStates.atk ? PlayerStates.AnimStates.runatk : PlayerStates.AnimStates.run;
-                    if (Input.GetKeyDown(KeyCode.LeftShift))
-                    {
-                        StartCoroutine(dodgeRollMove());
-                    }
-                }
-
+                jumpIndex++;
             }
-            if (Input.GetKeyDown(KeyCode.D))
+            if (states.current != PlayerStates.AnimStates.stun && states.current != PlayerStates.AnimStates.death)
             {
-                if (justFinished && direction < 0)
+                if (Input.GetKeyDown(KeyCode.A))
                 {
-                    currentSpeed = 0;
-                    justFinished = false;
-                }
-                //Debug.Log("Right");
-                direction = 1;
-
-                //currentSpeed += direction * (accelerationRate * Time.fixedDeltaTime);
-                //Player.Instance.spriteR.flipX = false;
-                if (onGround)
-                {
-                    states.current = states.current == PlayerStates.AnimStates.atk ? PlayerStates.AnimStates.runatk : PlayerStates.AnimStates.run;
-                    if (Input.GetKeyDown(KeyCode.LeftShift))
+                    if (justFinished && direction > 0)
                     {
-                        StartCoroutine(dodgeRollMove());
+                        currentSpeed = 0;
+                        justFinished = false;
                     }
-                }
-                //Emily you might need to keep in mind that I'm about to add a dodge roll
-            }
-            if (Input.GetKeyUp(KeyCode.A))
-            {
-                if (Input.GetKey(KeyCode.D))
-                {
-                    direction = 1;
-                    if (onGround)
-                    {
-                        StartCoroutine(dodgeRollMove());
-                    }
-                }
-                else
-                {
-                    direction = 0;
-                    if (onGround && states.current != PlayerStates.AnimStates.atk && states.current != PlayerStates.AnimStates.runatk)
-                        states.current = PlayerStates.AnimStates.idle;
-                }
-            }
-            if (Input.GetKeyUp(KeyCode.D))
-            {
-                if (Input.GetKey(KeyCode.A))
-                {
+                    //Debug.Log("Left");
                     direction = -1;
+
+                    //currentSpeed += direction * (accelerationRate * Time.fixedDeltaTime);
+                    //Player.Instance.spriteR.flipX = true;
                     if (onGround)
                     {
-                        StartCoroutine(dodgeRollMove());
+                        states.current = states.current == PlayerStates.AnimStates.atk ? PlayerStates.AnimStates.runatk : PlayerStates.AnimStates.run;
+                        if (Input.GetKeyDown(KeyCode.LeftShift))
+                        {
+                            StartCoroutine(dodgeRollMove());
+                        }
+                    }
+
+                }
+                if (Input.GetKeyDown(KeyCode.D))
+                {
+                    if (justFinished && direction < 0)
+                    {
+                        currentSpeed = 0;
+                        justFinished = false;
+                    }
+                    //Debug.Log("Right");
+                    direction = 1;
+
+                    //currentSpeed += direction * (accelerationRate * Time.fixedDeltaTime);
+                    //Player.Instance.spriteR.flipX = false;
+                    if (onGround)
+                    {
+                        states.current = states.current == PlayerStates.AnimStates.atk ? PlayerStates.AnimStates.runatk : PlayerStates.AnimStates.run;
+                        if (Input.GetKeyDown(KeyCode.LeftShift))
+                        {
+                            StartCoroutine(dodgeRollMove());
+                        }
+                    }
+                    //Emily you might need to keep in mind that I'm about to add a dodge roll
+                }
+                if (Input.GetKeyUp(KeyCode.A))
+                {
+                    if (Input.GetKey(KeyCode.D))
+                    {
+                        direction = 1;
+                        if (onGround)
+                        {
+                            StartCoroutine(dodgeRollMove());
+                        }
+                    }
+                    else
+                    {
+                        direction = 0;
+                        if (onGround && states.current != PlayerStates.AnimStates.atk && states.current != PlayerStates.AnimStates.runatk)
+                            states.current = PlayerStates.AnimStates.idle;
                     }
                 }
-                else
+                if (Input.GetKeyUp(KeyCode.D))
                 {
-                    direction = 0;
-                    if (onGround && states.current != PlayerStates.AnimStates.atk && states.current != PlayerStates.AnimStates.runatk)
-                        states.current = PlayerStates.AnimStates.idle;
+                    if (Input.GetKey(KeyCode.A))
+                    {
+                        direction = -1;
+                        if (onGround)
+                        {
+                            StartCoroutine(dodgeRollMove());
+                        }
+                    }
+                    else
+                    {
+                        direction = 0;
+                        if (onGround && states.current != PlayerStates.AnimStates.atk && states.current != PlayerStates.AnimStates.runatk)
+                            states.current = PlayerStates.AnimStates.idle;
+                    }
+                }
+                if (Input.GetKeyDown(KeyCode.Space) && !inDodgeRoll)
+                {
+                    //Debug.Log("Jumped");
+                    jump = true;
+                    if (jumpIndex == 0)
+                    {
+                        ani.SetBool("isJumping", true);
+                        firstJump = true;
+
+                    }
                 }
             }
-            if (Input.GetKeyDown(KeyCode.Space) && !inDodgeRoll)
-            {
-                //Debug.Log("Jumped");
-                jump = true;
-            }
-        }
-        else
-            direction = 0;
-    }
+            else
+                direction = 0;
 
+            ani.SetFloat("AirSpeed", rb.velocity.y);
+        }
+    }
+   
     private void FixedUpdate()
     {
         CheckGrounded();
-        MoveCharacter();
+        //if (firstJump)
+        
+            MoveCharacter();
+        
         //Ayyyyyyyyyyyyyy
         //Queue Giorno's theme
     }
@@ -192,6 +231,7 @@ public class MovementScript : MonoBehaviour
                 currentSpeed = 0;
             }
 
+
    
         }
         
@@ -219,11 +259,14 @@ public class MovementScript : MonoBehaviour
             {
                 onGround = true;
                 jumpIndex = 0;
-                //Debug.Log("True");
+                ani.SetBool("onGround", true);
+                ani.SetBool("isJumping", false);
+                Debug.Log("True");
                 return true;
             }
         }
-        //Debug.Log("False");
+        ani.SetBool("onGround", false);
+        Debug.Log("False");
         return false;
     }
 
