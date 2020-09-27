@@ -19,6 +19,16 @@ public class PlayerStates : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+            
+    }
+
+
+    public void SetStateToStun()
+    {
+        current = AnimStates.stun;
+    }
+    public void SetStateToIdle()
+    {
+        current = AnimStates.idle;
     }
 }

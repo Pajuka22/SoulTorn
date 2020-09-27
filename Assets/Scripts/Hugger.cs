@@ -14,7 +14,7 @@ public class Hugger : Enemy
     // Start is called before the first frame update
     void Start()
     {
-        
+        grabbing = true;
     }
 
     // Update is called once per frame
@@ -25,17 +25,31 @@ public class Hugger : Enemy
 
     public void GrabPlayer(GameObject playerObject)
     {
-        playerObject.GetComponent<Player>().SetStateToStun(attack);
-        playerObject.GetComponent<Player>().TakeDamage(attack);
+        print("grabbed");
+        playerObject.GetComponent<PlayerStates>().SetStateToStun();
+        //playerObject.GetComponent<Player>().TakeDamage(attack);
     }
 
     public void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Player"))
+        if (grabbing)
         {
-            print("Grabbed Player");
-            GrabPlayer(collision.gameObject);
+            if (collision.gameObject.CompareTag("Player"))
+            {
+                print("Grabbed Player");
+
+                StartCoroutine(grabTime());
+                GrabPlayer(collision.gameObject);
+
+            }
         }
+    }
+    IEnumerator grabTime()
+    {
+        grabbing = false;
+        yield return new WaitForSeconds(3f);
+        grabbing = true;
+
     }
 
 }
