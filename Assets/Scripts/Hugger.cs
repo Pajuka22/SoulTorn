@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Hugge : Enemy
+public class Hugger : Enemy
 {
     [SerializeField]
     BoxCollider2D HugBox;

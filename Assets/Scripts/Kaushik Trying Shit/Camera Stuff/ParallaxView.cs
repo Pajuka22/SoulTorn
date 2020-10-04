@@ -14,7 +14,6 @@ public class ParallaxView : MonoBehaviour
     void Start()
     {
         relativeStartPos = transform.position - cam.transform.position;
-        Debug.Log(transform.position.z);
         zDepth = default;
         startScale = transform.localScale.y;
 
@@ -36,10 +35,10 @@ public class ParallaxView : MonoBehaviour
 
     public void ChangeScale(Vector3 camMoved)
     {
-        float newScale = startScale * (relativeStartPos.z) / (transform.position.z - cam.transform.position.z) * cam.currentData.camSize / cam.defaultData.camSize;
-        Debug.Log(name + "1: " + cam.currentData.camSize / cam.defaultData.camSize);
+        float newScale = startScale * (relativeStartPos.z) / (transform.position.z - cam.transform.position.z) * cam.currentData.camSize / cam.initialData.camSize;
+        /*Debug.Log(name + "1: " + cam.currentData.camSize / cam.defaultData.camSize);
         Debug.Log(name + "2: " + relativeStartPos.z);
-        Debug.Log(name + "3: " + (transform.position.z - cam.transform.position.z));
+        Debug.Log(name + "3: " + (transform.position.z - cam.transform.position.z));*/
 
         transform.localScale = new Vector3(newScale, newScale, newScale);
 

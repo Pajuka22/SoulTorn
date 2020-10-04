@@ -61,11 +61,6 @@ public class MovementScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-        if (jump)
-        {
-            jumpIndex++;
-        }
         if (states.current != PlayerStates.AnimStates.stun && states.current != PlayerStates.AnimStates.death)
         {
             if (Input.GetKeyDown(KeyCode.A))
@@ -176,10 +171,6 @@ public class MovementScript : MonoBehaviour
         {
             currentSpeed = (-1) * maxSpeed;
 
-        }
-        if (jump)
-        {
-            jumpIndex++;
         }
         //Debug.Log(currentSpeed);
         rb.velocity = new Vector2((direction * walkSpeed) + currentSpeed, jump && jumpIndex <= jumpHeight.Count - 1 ? CalculateJumpSpeed() : rb.velocity.y);

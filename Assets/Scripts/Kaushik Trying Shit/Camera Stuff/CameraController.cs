@@ -12,6 +12,7 @@ public class CameraController : MonoBehaviour
     [NonSerialized]
     public Camera cam;
     public ZoomData defaultData = new ZoomData();
+    public ZoomData initialData = new ZoomData();
     [NonSerialized]
     public ZoomData currentData = new ZoomData();
     private ZoomData startData = new ZoomData();
@@ -23,20 +24,21 @@ public class CameraController : MonoBehaviour
     public float zDistanceFromPlayer;
     [System.NonSerialized]
     public float angle;
-
+    public List<int> list = new List<int>();
     public Vector3 startPos;
     private void Start()
     {
         cam = GetComponent<Camera>();
-        defaultData.followPlayer = true;
-        ResetDefaults();
-        currentData.Set(defaultData);
-        startData.Set(defaultData);
-        endData.Set(defaultData);
         zDistanceFromPlayer = transform.position.z - player.transform.position.z;
+        transform.position = new Vector3(transform.position.x, transform.position.y, zDistanceFromPlayer);
+        initialData.camSize = cam.orthographicSize;
+        currentData.Set(initialData);
+        startData.Set(initialData);
+        endData.Set(initialData);
         angle = Mathf.Atan(cam.rect.height / zDistanceFromPlayer);
         startPos = transform.position;
-
+        defaultData.followPlayer = true;
+        ResetDefaults();
     }
     private void LateUpdate()
     {
@@ -47,7 +49,7 @@ public class CameraController : MonoBehaviour
                 //transform.position = player.transform.position + (Vector3)(Local2Global(currentData.center)) + zDistanceFromPlayer * currentData.camSize / defaultData.camSize * Vector3.forward;
                 //Debug.Log(currentData.center);\
                 transform.position = Local2Global(currentData.center);
-                transform.position = new Vector3(transform.position.x, transform.position.y, zDistanceFromPlayer * currentData.camSize / defaultData.camSize);
+                transform.position = new Vector3(transform.position.x, transform.position.y, zDistanceFromPlayer * currentData.camSize / initialData.camSize);
             }
         }
         else
@@ -82,7 +84,7 @@ public class CameraController : MonoBehaviour
         {
             currentData.Set(endData);
         }
-        float z = zDistanceFromPlayer * currentData.camSize / defaultData.camSize;
+        float z = zDistanceFromPlayer * currentData.camSize / initialData.camSize;
         transform.position = new Vector3(transform.position.x, transform.position.y, z);
     }
     public void DoZoomStuff(ZoomData data, float lerpTime = 0)

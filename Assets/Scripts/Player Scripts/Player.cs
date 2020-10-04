@@ -32,7 +32,8 @@ public class Player : MonoBehaviour
 
     //Game variables
     public int health; //Health, self explanatory
-    public int attack; //Just a placeholder for strength
+    public float meleeAtk;
+    public float spellAtk;
     public GameObject[] passives;
     public GameObject[] actives;
     //The skills the player has equipped
@@ -208,7 +209,7 @@ public class Player : MonoBehaviour
 
     void LoadPlayer()
     {
-        attack = GlobalControl.Instance.atkDamage;
+        meleeAtk = GlobalControl.Instance.atkDamage;
         atkLag = 0;
         health = GlobalControl.Instance.health;
         actives = GlobalControl.Instance.actives;
