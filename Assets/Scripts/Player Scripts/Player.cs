@@ -31,7 +31,7 @@ public class Player : MonoBehaviour
     //Prevents the player from being able to execute multiple attacks instantly, adds end lag to attack
 
     //Game variables
-    public int health; //Health, self explanatory
+    public float health; //Health, self explanatory
     public float meleeAtk;
     public float spellAtk;
     public GameObject[] passives;
@@ -174,7 +174,7 @@ public class Player : MonoBehaviour
         {
             if (isAttacking)
             {
-                collision.gameObject.GetComponent<Enemy>().TakeDamage(attack);
+                collision.gameObject.GetComponent<Enemy>().TakeDamage(meleeAtk);
                 isAttacking = false;
             }
         }
@@ -182,7 +182,7 @@ public class Player : MonoBehaviour
         {
             if (isAttacking)
             {
-                collision.gameObject.GetComponent<Enemy>().TakeDamage(attack);
+                collision.gameObject.GetComponent<Enemy>().TakeDamage(meleeAtk);
                 isAttacking = false;
             }
         }
@@ -222,7 +222,7 @@ public class Player : MonoBehaviour
 
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(float damage)
     {
         if (AbleToGetHurt)
         {
@@ -389,7 +389,7 @@ public class Player : MonoBehaviour
     //Coroutine to do the chain attack I brainstormed
 
     //Hugger stuff section
-    IEnumerator Grappled(int damage)
+    IEnumerator Grappled(float damage)
     {
         if (AbleToGetHurt)
         {
@@ -412,7 +412,7 @@ public class Player : MonoBehaviour
         isAttacking = true;
     }
 
-    public void SetStateToStun(int damage)
+    public void SetStateToStun(float damage)
     {
         if (AbleToGetHurt)
         {

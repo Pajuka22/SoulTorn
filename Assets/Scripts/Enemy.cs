@@ -4,7 +4,7 @@ using UnityEngine;
 
 public abstract class Enemy : MonoBehaviour
 {
-    [SerializeField] protected int health, attack;
+    [SerializeField] protected float health, attack;
     protected int director, YDirector;
     protected bool inAttack;
     public bool inRange;
@@ -29,7 +29,7 @@ public abstract class Enemy : MonoBehaviour
         current = State.moving;
     }
 
-    public void TakeDamage(int damage) //true if this enemy dies
+    public void TakeDamage(float damage) //true if this enemy dies
     {
         print("Tooketh");
         health -= damage;

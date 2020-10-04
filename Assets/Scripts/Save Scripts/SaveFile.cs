@@ -11,7 +11,7 @@ public class SaveFile
     public int atkDamage;
     public int atkLag;
     public int maxHealth;
-    public int health;
+    public float health;
     public float maxSpeed;
     public float dodgeLength;
     public float accelerationRate;
